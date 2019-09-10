@@ -1,43 +1,23 @@
 import java.util.concurrent.ThreadLocalRandom
 
-class Dice {
-
-    //values that define dice pits
-
-}
-
+//enum class storing game state constants
 enum class State{
     WON, LOST, PLAYING, FIRST
 }
 
-enum class Score {
-    POINT
-}
-
 
 fun main() {
-    val redDie = Dice()
-    val blackDie = Dice()
+    //point and game-state variables
     var point = 0
     var state = State.FIRST
-
-    //arrays of wins and loses for the first roll
-    val loses: IntArray = intArrayOf(2,3,12)
-    val wins: IntArray = intArrayOf(7,11)
-
-
     //function that takes in two dice objects and returns the sums of their values
     fun doRoll(): Int {
-        var die = ThreadLocalRandom.current().nextInt(1, 6)
-        var die2 = ThreadLocalRandom.current().nextInt(1,6)
-        return die + die2
-
+        return ThreadLocalRandom.current().nextInt(1, 6) + ThreadLocalRandom.current().nextInt(1, 6)
     }
 
 
     fun playGame(){
-
-
+        //while loop for the first round of the game
         while(state == State.FIRST){
             var roll = doRoll()
             println("You rolled a $roll")
@@ -54,11 +34,12 @@ fun main() {
            else -> {
                state = State.PLAYING
                point = roll
-               println ("Keep rolling...")
+               println ("Point is $point. Keep rolling...")
            }
          }
-
-            while (state == State.PLAYING){
+        }
+        //while loop the rest of the game
+        while (state == State.PLAYING){
                 var newRoll = doRoll()
                 println("You shot a $newRoll")
 
@@ -71,18 +52,10 @@ fun main() {
                         println("You lose!")
                         state = State.LOST
                     }
-                    else -> println("re-rolling")
+                    else -> println("Point is $point. Re-rolling...")
                 }
             }
 
-
-
-        }
     }
-
     playGame()
-
-
-
-
 }
